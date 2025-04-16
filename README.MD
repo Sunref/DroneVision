@@ -14,6 +14,7 @@ This project implements computer vision algorithms on a drone to:
 The system processes video feed from the drone's camera to recognize objects such as vehicles, buildings, people, and obstacles. Using edge detection and path recognition algorithms, it can identify walkways, roads, or designated routes and guide the drone to follow them while avoiding detected obstacles.
 
 # Structure
+```
 ├── data          # Armazena os dados do projeto, como conjuntos de dados, dados brutos e processados
 ├── docs          # Documentação do projeto, incluindo especificações técnicas e manuais de usuário
 ├── notebooks     # Notebooks Jupyter/Python para análises exploratórias e demonstrações
@@ -21,3 +22,4 @@ The system processes video feed from the drone's camera to recognize objects suc
 │   └── images    # Imagens usadas nos relatórios ou geradas pelo projeto
 ├── src           # Código-fonte do projeto, contendo os módulos e classes principais
 └── tests         # Testes unitários e de integração para verificar a funcionalidade do código
+```
