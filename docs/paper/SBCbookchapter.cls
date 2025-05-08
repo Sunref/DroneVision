@@ -92,17 +92,19 @@
 % [Re]definition of environments abstract and resumo
 %=======================================================================
 \renewenvironment{abstract}[1][Abstract]{%
-	\itshape
-	\begin{center}
-	\textbf{#1}
-	\end{center}
+	\vspace{-1ex} % reduz o espaço antes do título
+    \itshape
+    \begin{center}
+    \textbf{#1}
+    \end{center}
+    \vspace{-20ex} % reduz o espaço depois do título
 }{%
 }
 
 \newenvironment{resumo}{%
-	\begin{abstract}[Resumo]
+    \begin{abstract}[Resumo]
 }{%
-	\end{abstract}
+    \end{abstract}
 }
 
 %=======================================================================
