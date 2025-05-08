@@ -1,7 +1,7 @@
 %
 % SBCbookchapter - SBC book chapters
 %
-% Copyright (C) 2005 Rafael Bohrer ¡vila
+% Copyright (C) 2005 Rafael Bohrer √Åvila
 %
 % This program is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 % along with this program; if not, write to the Free Software
 % Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 %
-% Charset: ISO8859-1 (latin-1) ·ÈÌÛ˙Á
+% Charset: ISO8859-1 (latin-1) √°√©√≠√≥√∫√ß
 %
 % $Id$
 %
@@ -84,8 +84,6 @@
 %=======================================================================
 \renewcommand{\maketitle}{%
 	\noindent%
-	{\chapnamesize\textbf{\chaptername}\\[1ex]}
-	{\chapnumsize\textbf{\thechapter}\\[2ex]}
 	{\titlesize\textbf{\@title}\\[4ex]}
 	{\authorsize\@author\\[4ex]}
 }
