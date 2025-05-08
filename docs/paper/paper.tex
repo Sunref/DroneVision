@@ -5,6 +5,7 @@
 \documentclass{SBCbookchapter}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{booktabs}
 \usepackage[brazilian,brazil,portuguese,english]{babel}
 \usepackage{graphicx}
 
@@ -32,7 +33,16 @@ O sistema deverá, obrigatóriamente, identificar formas geométricas coloridas,
 \section{Plano de Trabalho}
 O plano de trabalho se baseia em, inicialmente, encontros semanais para discussão e andamento do projeto. A princípio, a ferramenta escolhida para o trabalho com a linguagem Python foi o aplicativo Visual Studio Code, desenvolvido pela microsoft. Nosso ambiente de trabalho utilizará de um ambiente virtual fornecido atravez da ferramenta Anaconda, e junto de bibliotecas para reconhecimento de objetos - como TinyYOLO - o ambiente e as métas - definidos como "missões" pela Comissão da Competição" serão cumpridos. Cada etapa e avanço do projeto deve estar presente neste documento.
 
-Seguindo o cronograma proposto pelo professor orientador do prjeto, Gabriel M. Alves, a cada duas semanas, obrigatoriamente, entregas parciais deste documento devem ocorrer conforme a tabela.
+Seguindo o cronograma proposto pelo professor orientador do prjeto, Gabriel M. Alves, a cada duas semanas, obrigatoriamente, entregas parciais deste documento devem ocorrer conforme a tabela 1.1.
+
+
+
+	
+	
+	
+
+
+
 
 \section{Bibliografia}
 SAE BRASIL. Regulamento EletroQuad SAE BRASIL - Eletrobras 2025. Versão 4.0, 2025.
@@ -41,9 +51,29 @@ SAE BRASIL. Procedimentos Operacionais – EletroQuad SAE BRASIL - Eletrobras 20
 
 SAE BRASIL. Termo de Responsabilidade EletroQuad SAE BRASIL - Eletrobras 2025.
 
-SAE BRASIL. Mensagens e Informativos da competição. Disponíveis no site oficial da SAE BRASIL.
 
-\pagebreak
+
+\begin{table}[]
+	\centering
+	\begin{tabular}{@{}cll@{}}
+		\toprule
+		\multicolumn{1}{l}{Data} & Entrega               & Descrição                                                                                                   \\ \midrule
+		07/05                    & Proposta do Seminário & \begin{tabular}[c]{@{}l@{}}Escopo, objetivos, bibliografia inicial \\ e plano de trabalho\end{tabular}      \\
+		21/05                    & Documento Parcial     & \begin{tabular}[c]{@{}l@{}}Introdução e Fundamentação teórica completas,\\ Metodologia parcial\end{tabular} \\
+		11/06 & Protótipo  prático & \begin{tabular}[c]{@{}l@{}}Metodologia completa, \\ Demonstração inicial da implementação  prática\end{tabular} \\
+		24/06                    & Apresentação prévia   & Envio dos slides e do relatório final                                                                       \\
+		-                        & Entrega final         & Envio da aplicação prática e apresentação                                                                   \\ \bottomrule
+	\end{tabular}
+	\caption{Cronograma de entregas}
+	\label{tab:cronograma_entregas}
+\end{table}
+
+
+
+\end{document}
+
+
+%% ================================================================
 
 \section{General Information}
 All submitted paper to some SBC conference, including any supporting
