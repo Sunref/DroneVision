@@ -26,14 +26,98 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 \end{resumo}
 \pagebreak
 
+\section{Introdução}
+No contexto da "COMPETIÇÃO ELETROQUAD SAE BRASIL – ELETROBRAS 2025", estudantes dos cursos de Bacharel em Ciência da Computação e Engenharia de Controle
+e Automação do Instituto Federal de Educação, Ciência e Tecnologia do Campus São João da Boa Vista vêm desenvolvendo um projeto que visa atender
+às exigências da competição, tais qual a construção de um drone  - seguindo as recomendações da comissão da competição - a  identificação de formas
+geométricas - estas que serão coloridas, a detecção de obstáculos e a navegação pelos mesmos. Dado contexto, foi necessário a criação de equipes
+responsavéis por cada etapa do desenvolvimento do projeto. Referindo-se à etapa de "implementação", serão apresentadas então as metodologias utilizadas
+para o desenvolvimento do sistema para reconhecimento de objetos e detecção de obstáculos.
+
+A princípio, o sistema será implementado na linguagem de programação Python, seguindo as recomendações e o regulamento da competição da Comissão Técnica,
+buscando automatizar as missões propostas. Para isso, são utilizadas ferramentas como o ambiente de desenvolvimento Visual Studio Code,
+o gerenciador de ambientes Anaconda e bibliotecas especializadas em reconhecimento de objetos, como o TinyYOLO.
+
+
+Além de detalhar os objetivos do projeto, este capítulo descreve detalhadamente todo o processo de elaboração e criação do sistema que será implantado
+no drone, fornecendo uma visão abrangente de todo o processo e dos desafios enfrentados. A implementação deste sistema representa uma contribuição
+significativa para o avanço das práticas educacionais e tecnológicas no âmbito das competições acadêmicas de engenharia.
+
 \section{Objetivos}
-Através das constante evolução do projeto realizado pelos estudantes do Instituto Federal de Educação, Ciência e Tecnologia do Campus São João da Boa vista a respeito da competição "COMPETIÇÃO ELETROQUAD SAE BRASIL - ELETROBRAS 2025", e seguindo o Regulamento da Competição pela Comissão Técnica, viu-se a necessidade da implementação de um sistema em Python para as missões da Competição.
-O sistema deverá, obrigatóriamente, identificar formas geométricas coloridas, além de outros possiveis obstáculos definidos pela comissão, como  percorrer caminhos definidos ao analisar o terreno.
+Através das constantes evoluções do projeto realizado pelos estudantes do IFSP-SBV a respeito da competição da Eletroquad SAE Brasil e seguindo o
+Regulamento da Competição, viu-se a necessidade da implementação de um sistema em Python para realização das missões definidas na competição.
+O sistema deverá, obrigatóriamente, identificar formas geométricas e suas respectivas cores, além de outros possíveis obstáculos definidos pela comissão,
+como percorrer caminhos definidos ao analisar o terreno.
+
+\section{Fundamentação Teórica}
+\subsection{Visão Computacional}
+A visão computacional representa um campo fundamental para o desenvolvimento de autônomos capazes de interpretar informações visuais do ambiente.
+Esta área fornece as bases teóricas e práticas necessárias para que o drone identifique com precisão as formas geométricas
+coloridas e navegue pelos obstáculos. O processo de visão computacional pode ser estruturado em estágios sequenciais e complementares,
+iniciando pela aquisição e processamento básico de imagens, seguido por técnicas mais avançadas de detecção e reconhecimento de objetos.
+Cada um destes estágios apresenta desafios particulares e requer abordagens específicas, especialmente quando implementados em
+plataformas com recursos computacionais limitados, como é o caso dos sistemas embarcados em VANTs
+(Veículos Aéreos Não Tripulados).
+
+\subsection{Processamento de Imagens}
+O processamento de imagens é a etapa inicial - e fundamental - da visão computacional, onde as imagens capturadas são preparadas para as etapas
+subsequentes de análise. Uma imagem digital é representada computacionalmente como uma matriz bidimensional de valores de intensidade luminosa,
+organizada em pixels. Para imagens coloridas, cada pixel é codificado em diferentes espaços de cores, sendo o RGB (Red, Green, Blue) o mais comum,
+onde cada cor é formada pela combinação aditiva destes três canais primários.
+
+No entanto, para determinadas aplicações de detecção baseada em cores, o espaço HSV (Hue, Saturation, Value) oferece vantagens significativas
+por separar a informação de cor (matiz) da intensidade luminosa, tornando o sistema mais robusto a variações de iluminação. Esta característica é
+particularmente relevante no projeto, considerando que as missões da competição envolvem a identificação de formas geométricas coloridas em ambientes
+com condições de iluminação potencialmente variáveis.
+
+\subsection{Redes Neurais para Detecção de Objetos}
+No contexto de sistemas autônomos de percepção visual, as redes neurais convolucionais (CNNs) revolucionaram o campo da detecção de objetos,
+superando as abordagens tradicionais baseadas em características extraídas manualmente. Para aplicações em plataformas com recursos limitados,
+e de arquiteturas específicas (como drones) as CNNs são capazes de  equilibrar precisão e eficiência, destacando-se entre elas temos o TinyYOLO.
+
+\subsubsection{Arquitetura TinyYOLO}
+O TinyYOLO representa uma versão compacta da arquitetura YOLO (You Only Look Once), e se destaca por ser otimizada para aplicações embarcadas que
+requerem inferência em tempo real com recursos computacionais limitados.Enquanto a versão original do YOLO utiliza uma arquitetura profunda com dezenas
+de camadas convolucionais, o TinyYOLO emprega uma estrutura significativamente reduzida, mantendo o princípio fundamental de detecção em estágio único.
+
+Esta arquitetura realiza a detecção de objetos tratando o problema como uma única tarefa de regressão, dividindo a imagem em uma grade de células
+e prevendo simultaneamente caixas delimitadoras (bounding boxes) - ferramenta fundamental para identificar e categorizar objetos em imagens -,
+probabilidades de classes e escores de confiança para cada célula.
+
+A estrutura do TinyYOLO consiste em aproximadamente 20 camadas convolucionais intercaladas com camadas de max pooling - técnica para reduzir
+a dimensionalidade das imagens e, consequentemente, o número de parâmetros da rede - seguidas por camadas fully connected - camada de rede neural onde
+cada neurônio está conectado a todos os neurônios da camada anterior e da camada seguinte - responsáveis pela previsão final. Para reduzir o número de
+parâmetros e o custo computacional, o TinyYOLO emprega filtros convolucionais 1×1 que atuam como gargalos (bottlenecks) de dimensionalidade.
+
+Para o contexto específico da competição , a arquitetura TinyYOLO apresenta características particularmente vantajosas, pois permite a detecção em tempo
+real das formas geométricas coloridas em um hardware embarcado com recursos limitados. Além disso, sua capacidade de detectar múltiplos objetos
+simultaneamente em uma única passagem pela rede é essencial para missões que envolvem a identificação de caminhos e obstáculos.
+
+\subsection{Sistema Embarcado: Raspberry Pi}
+No desenvolvimento de sistemas autônomos para drones, a escolha da plataforma computacional representa um fator importante e que irá influenciar
+diretamente o desempenho do projeto como um todo. No contexto da competição, a Raspberry Pi surge como uma solução equilibrada que combina poder
+computacional adequado, baixo consumo energético e flexibilidade de desenvolvimento.
+
+\subsubsection{Arquitetura e Capacidades da Raspberry Pi}
+A Raspberry Pi é um computador de placa única (SBC - Single Board Computer) baseado em arquitetura ARM, desenvolvido inicialmente para fins educacionais
+, mas que rapidamente se estabeleceu como plataforma para prototipagem e implementação de sistemas embarcados.
+
+Uma característica distintiva da Raspberry Pi 3 é a integração nativa de conectividade sem fio, incluindo Wi-Fi 802.11n e Bluetooth 4.1/BLE,
+eliminando a necessidade de adaptadores externos e reduzindo o peso total do sistema embarcado—fator crucial para a aplicação no projeto. Adicionalmente,
+a plataforma disponibiliza 40 pinos GPIO, interfaces UART, I²C, SPI, e a importante interface CSI (Camera Serial Interface)para conexão direta do módulo
+de câmera Raspberry Pi.
+
+\section{Metodologia}
+METODOLOGIA
 
 \section{Plano de Trabalho}
-O plano de trabalho se baseia em, inicialmente, encontros semanais para discussão e andamento do projeto. A princípio, a ferramenta escolhida para o trabalho com a linguagem Python foi o aplicativo Visual Studio Code, desenvolvido pela microsoft. Nosso ambiente de trabalho utilizará de um ambiente virtual fornecido atravez da ferramenta Anaconda, e junto de bibliotecas para reconhecimento de objetos - como TinyYOLO - o ambiente e as métas - definidos como "missões" pela Comissão da Competição" serão cumpridos. Cada etapa e avanço do projeto deve estar presente neste documento.
+O plano de trabalho se baseia em, inicialmente, em encontros semanais para discussão e andamento do projeto. A princípio, a ferramenta escolhida para o
+trabalho além da linguagem de programaçao Python foi o aplicativo Visual Studio Code, desenvolvido pela Microsoft. Nossa área de trabalho utilizará
+de um ambiente virtual fornecido através da ferramenta Anaconda, e junto de bibliotecas para reconhecimento de objetos - como TinyYOLO -
+o ambiente e as metas - definidos como "missões" pela Comissão da Competição" serão cumpridos.
 
-Seguindo o cronograma proposto pelo professor orientador do projeto, Gabriel M. Alves, obrigatoriamente, entregas parciais deste documento devem ocorrer como mostra a tabela 1.1.
+Seguindo o cronograma proposto pelo professor orientador do projeto, Gabriel M. Alves, obrigatoriamente, entregas
+parciais deste documento devem ocorrer como mostra a tabela 1.1.
 
 \begin{table}[h]
 	\centering
@@ -57,15 +141,19 @@ SAE BRASIL. Procedimentos Operacionais – EletroQuad SAE BRASIL - Eletrobras 20
 
 SAE BRASIL. Termo de Responsabilidade EletroQuad SAE BRASIL - Eletrobras 2025.
 
+AZEVEDO, Eduardo; CONCI, Aura; LETA, Fabiana. Computação gráfica: teoria e prática:
+geração de imagens. Volume 2. 1. ed. Rio de Janeiro: Alta Books, 2022. 352 p. ISBN 978-65-5520-816-0
 
-\section{Introdução}
-INTRODUÇÃO
+WANG, Ao; CHEN, Hui; LIU, Lihao; CHEN, Kai; LIN, Zijia; HAN, Jungong; DING, Guiguang. YOLOv10: Real-Time End-to-End Object Detection. arXiv preprint,
+2024. Disponível em: https://arxiv.org/abs/2405.14458. Acesso em: 19 maio 2025.
 
-\section{Fundamentação Teórica}
-FUNDAMENTAÇÃO TEÓRICA
+MOKSYAKOV, Alexander; WU, Yuandi; GADSDEN, Stephen Andrew; YAWNEY, John; ALSHABI, Mohammad. Object Detection and Tracking with YOLO and the Sliding
+Innovation Filter. Sensors, v. 24, n. 7, p. 2107, 2024. Disponível em: https://www.mdpi.com/1424-8220/24/7/2107. Acesso em: 19 maio 2025.
 
-\section{Metodologia}
-METODOLOGIA
+HALFACREE, Gareth; UPTON, Eben. Raspberry Pi User Guide. 4. ed. Chichester: Wiley, 2016.
+
+RASPBERRY PI FOUNDATION. Raspberry Pi 3 Model B. Disponível em: https://www.raspberrypi.org/products/raspberry-pi-3-model-b/
+Acesso em: 19 maio 2025.
 
 \end{document}
 
