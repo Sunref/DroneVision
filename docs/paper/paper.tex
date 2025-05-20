@@ -59,26 +59,34 @@ Cada um destes estágios apresenta desafios particulares e requer abordagens esp
 plataformas com recursos computacionais limitados, como é o caso dos sistemas embarcados em VANTs
 (Veículos Aéreos Não Tripulados).
 
+\subsection{Sistema Embarcado: Raspberry Pi}
+No desenvolvimento de sistemas autônomos para drones, a escolha da plataforma computacional representa um fator importante e que irá influenciar
+diretamente o desempenho do projeto como um todo. No contexto da competição, a Raspberry Pi surge como uma solução equilibrada que combina poder
+computacional adequado, baixo consumo energético e flexibilidade de desenvolvimento.
+
+A Raspberry Pi é um computador de placa única (SBC - Single Board Computer) baseado em arquitetura ARM, desenvolvido inicialmente para fins educacionais,
+mas que rapidamente se estabeleceu como plataforma para prototipagem e implementação de sistemas embarcados.
+
 \subsection{Processamento de Imagens}
 O processamento de imagens é a etapa inicial - e fundamental - da visão computacional, onde as imagens capturadas são preparadas para as etapas
-subsequentes de análise. Uma imagem digital é representada computacionalmente como uma matriz bidimensional de valores de intensidade luminosa,
-organizada em pixels. Para imagens coloridas, cada pixel é codificado em diferentes espaços de cores, sendo o RGB (Red, Green, Blue) o mais comum,
-onde cada cor é formada pela combinação aditiva destes três canais primários.
+subsequentes de análise. Uma imagem digital é representada computacionalmente como uma matriz de vetores bidimensionais, que recebem valores de intensidade
+luminosa, e são organizada em pixels. Para imagens coloridas, cada pixel é codificado em diferentes espaços de cores, sendo o RGB (Red, Green, Blue)
+o mais comum - onde cada cor é formada pela combinação destas três cores primárias.
 
-No entanto, para determinadas aplicações de detecção baseada em cores, o espaço HSV (Hue, Saturation, Value) oferece vantagens significativas
-por separar a informação de cor (matiz) da intensidade luminosa, tornando o sistema mais robusto a variações de iluminação. Esta característica é
-particularmente relevante no projeto, considerando que as missões da competição envolvem a identificação de formas geométricas coloridas em ambientes
-com condições de iluminação potencialmente variáveis.
+No entanto, para determinadas aplicações baseada em cores, o espaço HSV (Hue, Saturation, Value) apresenta vantagens significativas
+por separar a informação de cor da intensidade luminosa, tornando a identificação de variações de iluminação perceptível. Esta característica é
+de extrema relevancia no projeto, considerando que as missões da competição envolvem a identificação de formas geométricas coloridas em ambientes
+com condições de iluminação variáveis.
 
 \subsection{Redes Neurais para Detecção de Objetos}
 No contexto de sistemas autônomos de percepção visual, as redes neurais convolucionais (CNNs) revolucionaram o campo da detecção de objetos,
 superando as abordagens tradicionais baseadas em características extraídas manualmente. Para aplicações em plataformas com recursos limitados,
-e de arquiteturas específicas (como drones) as CNNs são capazes de  equilibrar precisão e eficiência, destacando-se entre elas temos o TinyYOLO.
+e de arquiteturas específicas (como drones) as CNNs são capazes de  equilibrar precisão e eficiência.
 
 \subsubsection{Arquitetura TinyYOLO}
 O TinyYOLO representa uma versão compacta da arquitetura YOLO (You Only Look Once), e se destaca por ser otimizada para aplicações embarcadas que
-requerem inferência em tempo real com recursos computacionais limitados.Enquanto a versão original do YOLO utiliza uma arquitetura profunda com dezenas
-de camadas convolucionais, o TinyYOLO emprega uma estrutura significativamente reduzida, mantendo o princípio fundamental de detecção em estágio único.
+requerem inferência em tempo real. Enquanto a versão original do YOLO utiliza uma arquitetura profunda com dezenas
+de camadas convolucionais, o TinyYOLO trás uma estrutura significativamente menor, mantendo o princípio de detecção em estágio único.
 
 Esta arquitetura realiza a detecção de objetos tratando o problema como uma única tarefa de regressão, dividindo a imagem em uma grade de células
 e prevendo simultaneamente caixas delimitadoras (bounding boxes) - ferramenta fundamental para identificar e categorizar objetos em imagens -,
@@ -89,23 +97,9 @@ a dimensionalidade das imagens e, consequentemente, o número de parâmetros da 
 cada neurônio está conectado a todos os neurônios da camada anterior e da camada seguinte - responsáveis pela previsão final. Para reduzir o número de
 parâmetros e o custo computacional, o TinyYOLO emprega filtros convolucionais 1×1 que atuam como gargalos (bottlenecks) de dimensionalidade.
 
-Para o contexto específico da competição , a arquitetura TinyYOLO apresenta características particularmente vantajosas, pois permite a detecção em tempo
-real das formas geométricas coloridas em um hardware embarcado com recursos limitados. Além disso, sua capacidade de detectar múltiplos objetos
-simultaneamente em uma única passagem pela rede é essencial para missões que envolvem a identificação de caminhos e obstáculos.
-
-\subsection{Sistema Embarcado: Raspberry Pi}
-No desenvolvimento de sistemas autônomos para drones, a escolha da plataforma computacional representa um fator importante e que irá influenciar
-diretamente o desempenho do projeto como um todo. No contexto da competição, a Raspberry Pi surge como uma solução equilibrada que combina poder
-computacional adequado, baixo consumo energético e flexibilidade de desenvolvimento.
-
-\subsubsection{Arquitetura e Capacidades da Raspberry Pi}
-A Raspberry Pi é um computador de placa única (SBC - Single Board Computer) baseado em arquitetura ARM, desenvolvido inicialmente para fins educacionais
-, mas que rapidamente se estabeleceu como plataforma para prototipagem e implementação de sistemas embarcados.
-
-Uma característica distintiva da Raspberry Pi 3 é a integração nativa de conectividade sem fio, incluindo Wi-Fi 802.11n e Bluetooth 4.1/BLE,
-eliminando a necessidade de adaptadores externos e reduzindo o peso total do sistema embarcado—fator crucial para a aplicação no projeto. Adicionalmente,
-a plataforma disponibiliza 40 pinos GPIO, interfaces UART, I²C, SPI, e a importante interface CSI (Camera Serial Interface)para conexão direta do módulo
-de câmera Raspberry Pi.
+Para o contexto específico da competição , a arquitetura TinyYOLO apresenta características vantajosas, pois permite a detecção em tempo
+real das formas geométricas apresentadas pela comissão. Além disso, sua capacidade de detectar múltiplos objetos
+simultaneamente é essencial para missões que envolvem a identificação de caminhos e obstáculos.
 
 \section{Metodologia}
 METODOLOGIA
