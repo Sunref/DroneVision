@@ -103,7 +103,16 @@ real das formas geométricas apresentadas pela comissão. Além disso, sua capac
 simultaneamente é essencial para missões que envolvem a identificação de caminhos e obstáculos.
 
 \section{Metodologia}
-METODOLOGIA
+
+\subsection{Estrutura dos Modelos Computacionais}
+A metodologia adotada neste trabalho fundamenta-se no desenvolvimento de um sistema de percepção e navegação autônoma baseado na integração de três modelos computacionais complementares: detecção de objetos e formas, estimativa de profundidade e mapeamento espacial. Esses modelos operam de forma integrada, sendo treinados com conjuntos de dados específicos e otimizados para execução em sistemas embarcados ou distribuídos, sem dependência de tecnologias proprietárias ou arquiteturas específicas. O desenvolvimento prioriza abordagens que possam ser implementadas em diferentes plataformas de hardware e software, garantindo flexibilidade e portabilidade.
+
+\subsection{Pipeline de Integração e Estado de Desenvolvimento}
+A integração ocorre por meio de um pipeline de fusão sensorial, que combina informações de detecção, profundidade e localização, além de dados provenientes de sensores inerciais e ambientais. Este pipeline gera comandos de controle autônomo com base em critérios de confiabilidade, distância e relevância das informações capturadas, permitindo que o sistema adapte-se dinamicamente ao ambiente. Ressalta-se que o projeto encontra-se em estágio de prototipagem, sendo passível de modificações, melhorias e adaptações ao longo do desenvolvimento. Caso haja disponibilidade de tempo e recursos, as fases de validação podem ser expandidas para simulações em ambientes digitais avançados, utilizando plataformas de modelagem e simulação tridimensional, a fim de explorar cenários mais complexos, realistas e controlados.
+
+\subsection{Estratégia de Validação e Refinamento}
+A validação do sistema ocorre tanto em simulações quanto em testes práticos, avaliando métricas como precisão na detecção, acurácia na estimativa de profundidade, estabilidade no mapeamento espacial, tempo de resposta e robustez frente a diferentes condições operacionais. Esse ciclo contínuo de desenvolvimento, validação e refinamento visa assegurar que a solução proposta atenda aos requisitos de confiabilidade, escalabilidade e desempenho, mantendo-se adaptável às restrições técnicas, operacionais e temporais do projeto.
+
 
 \section{Plano de Trabalho}
 O plano de trabalho se baseia em, inicialmente, em encontros semanais para discussão e andamento do projeto. A princípio, a ferramenta escolhida para o
