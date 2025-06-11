@@ -28,135 +28,57 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
 \pagebreak
 
 \section{Introdução}
-No contexto da "COMPETIÇÃO ELETROQUAD SAE BRASIL – ELETROBRAS 2025", estudantes dos cursos de Bacharel em Ciência da Computação e Engenharia de Controle
-e Automação do Instituto Federal de Educação, Ciência e Tecnologia do Campus São João da Boa Vista vêm desenvolvendo um projeto que visa atender
-às exigências da competição, tais qual a construção de um drone  - seguindo as recomendações da comissão da competição - a  identificação de formas
-geométricas - estas que serão coloridas, a detecção de obstáculos e a navegação pelos mesmos. Dado contexto, foi necessário a criação de equipes
-responsavéis por cada etapa do desenvolvimento do projeto. Referindo-se à etapa de "implementação", serão apresentadas então as metodologias utilizadas
-para o desenvolvimento do sistema para reconhecimento de objetos e detecção de obstáculos.
 
-A princípio, o sistema será implementado na linguagem de programação Python, seguindo as recomendações e o regulamento da competição da Comissão Técnica,
-buscando automatizar as missões propostas. Para isso, são utilizadas ferramentas como o ambiente de desenvolvimento Visual Studio Code,
-o gerenciador de ambientes Anaconda e bibliotecas especializadas em reconhecimento de objetos, como o TinyYOLO.
-
-
-Além de detalhar os objetivos do projeto, este capítulo descreve detalhadamente todo o processo de elaboração e criação do sistema que será implantado
-no drone, fornecendo uma visão abrangente de todo o processo e dos desafios enfrentados. A implementação deste sistema representa uma contribuição
-significativa para o avanço das práticas educacionais e tecnológicas no âmbito das competições acadêmicas de engenharia.
 
 \section{Objetivos}
-Através das constantes evoluções do projeto realizado pelos estudantes do IFSP-SBV a respeito da competição da Eletroquad SAE Brasil e seguindo o
-Regulamento da Competição, viu-se a necessidade da implementação de um sistema em Python para realização das missões definidas na competição.
-O sistema deverá, obrigatóriamente, identificar formas geométricas e suas respectivas cores, além de outros possíveis obstáculos definidos pela comissão,
-como percorrer caminhos definidos ao analisar o terreno.
+
 
 \section{Fundamentação Teórica}
 \subsection{Visão Computacional}
-A visão computacional representa um campo fundamental para o desenvolvimento de autônomos capazes de interpretar informações visuais do ambiente.
-Esta área fornece as bases teóricas e práticas necessárias para que o drone identifique com precisão as formas geométricas
-coloridas e navegue pelos obstáculos. O processo de visão computacional pode ser estruturado em estágios sequenciais e complementares,
-iniciando pela aquisição e processamento básico de imagens, seguido por técnicas mais avançadas de detecção e reconhecimento de objetos.
-Cada um destes estágios apresenta desafios particulares e requer abordagens específicas, especialmente quando implementados em
-plataformas com recursos computacionais limitados, como é o caso dos sistemas embarcados em VANTs
-(Veículos Aéreos Não Tripulados).
+
 
 \subsection{Sistema Embarcado: Raspberry Pi}
-No desenvolvimento de sistemas autônomos para drones, a escolha da plataforma computacional representa um fator importante e que irá influenciar
-diretamente o desempenho do projeto como um todo. No contexto da competição, a Raspberry Pi surge como uma solução equilibrada que combina poder
-computacional adequado, baixo consumo energético e flexibilidade de desenvolvimento.
 
-A Raspberry Pi é um computador de placa única (SBC - Single Board Computer) baseado em arquitetura ARM, desenvolvido inicialmente para fins educacionais,
-mas que rapidamente se estabeleceu como plataforma para prototipagem e implementação de sistemas embarcados.
 
 \subsection{Processamento de Imagens}
-O processamento de imagens é a etapa inicial - e fundamental - da visão computacional, onde as imagens capturadas são preparadas para as etapas
-subsequentes de análise. Uma imagem digital é representada computacionalmente como uma matriz de vetores bidimensionais, que recebem valores de intensidade
-luminosa, e são organizada em pixels. Para imagens coloridas, cada pixel é codificado em diferentes espaços de cores, sendo o RGB (Red, Green, Blue)
-o mais comum - onde cada cor é formada pela combinação destas três cores primárias.
 
-No entanto, para determinadas aplicações baseada em cores, o espaço HSV (Hue, Saturation, Value) apresenta vantagens significativas
-por separar a informação de cor da intensidade luminosa, tornando a identificação de variações de iluminação perceptível. Esta característica é
-de extrema relevancia no projeto, considerando que as missões da competição envolvem a identificação de formas geométricas coloridas em ambientes
-com condições de iluminação variáveis.
 
 \subsection{Redes Neurais para Detecção de Objetos}
-No contexto de sistemas autônomos de percepção visual, as redes neurais convolucionais (CNNs) revolucionaram o campo da detecção de objetos,
-superando as abordagens tradicionais baseadas em características extraídas manualmente. Para aplicações em plataformas com recursos limitados,
-e de arquiteturas específicas (como drones) as CNNs são capazes de  equilibrar precisão e eficiência.
+
 
 \subsubsection{Arquitetura TinyYOLO}
-O TinyYOLO representa uma versão compacta da arquitetura YOLO (You Only Look Once), e se destaca por ser otimizada para aplicações embarcadas que
-requerem inferência em tempo real. Enquanto a versão original do YOLO utiliza uma arquitetura profunda com dezenas
-de camadas convolucionais, o TinyYOLO trás uma estrutura significativamente menor, mantendo o princípio de detecção em estágio único.
 
-Esta arquitetura realiza a detecção de objetos tratando o problema como uma única tarefa de regressão, dividindo a imagem em uma grade de células
-e prevendo simultaneamente caixas delimitadoras (bounding boxes) - ferramenta fundamental para identificar e categorizar objetos em imagens -,
-probabilidades de classes e escores de confiança para cada célula.
-
-A estrutura do TinyYOLO consiste em aproximadamente 20 camadas convolucionais intercaladas com camadas de max pooling - técnica para reduzir
-a dimensionalidade das imagens e, consequentemente, o número de parâmetros da rede - seguidas por camadas fully connected - camada de rede neural onde
-cada neurônio está conectado a todos os neurônios da camada anterior e da camada seguinte - responsáveis pela previsão final. Para reduzir o número de
-parâmetros e o custo computacional, o TinyYOLO emprega filtros convolucionais 1×1 que atuam como gargalos (bottlenecks) de dimensionalidade.
-
-Para o contexto específico da competição , a arquitetura TinyYOLO apresenta características vantajosas, pois permite a detecção em tempo
-real das formas geométricas apresentadas pela comissão. Além disso, sua capacidade de detectar múltiplos objetos
-simultaneamente é essencial para missões que envolvem a identificação de caminhos e obstáculos.
 
 \section{Metodologia}
 
 \subsection{Estrutura dos Modelos Computacionais}
-A metodologia adotada neste trabalho fundamenta-se no desenvolvimento de um sistema de percepção e navegação autônoma baseado na integração de três modelos computacionais complementares: detecção de objetos e formas, estimativa de profundidade e mapeamento espacial. Esses modelos operam de forma integrada, sendo treinados com conjuntos de dados específicos e otimizados para execução em sistemas embarcados ou distribuídos, sem dependência de tecnologias proprietárias ou arquiteturas específicas. O desenvolvimento prioriza abordagens que possam ser implementadas em diferentes plataformas de hardware e software, garantindo flexibilidade e portabilidade.
+
 
 \subsection{Pipeline de Integração e Estado de Desenvolvimento}
-A integração ocorre por meio de um pipeline de fusão sensorial, que combina informações de detecção, profundidade e localização, além de dados provenientes de sensores inerciais e ambientais. Este pipeline gera comandos de controle autônomo com base em critérios de confiabilidade, distância e relevância das informações capturadas, permitindo que o sistema adapte-se dinamicamente ao ambiente. Ressalta-se que o projeto encontra-se em estágio de prototipagem, sendo passível de modificações, melhorias e adaptações ao longo do desenvolvimento. Caso haja disponibilidade de tempo e recursos, as fases de validação podem ser expandidas para simulações em ambientes digitais avançados, utilizando plataformas de modelagem e simulação tridimensional, a fim de explorar cenários mais complexos, realistas e controlados.
+
 
 \subsection{Estratégia de Validação e Refinamento}
-A validação do sistema ocorre tanto em simulações quanto em testes práticos, avaliando métricas como precisão na detecção, acurácia na estimativa de profundidade, estabilidade no mapeamento espacial, tempo de resposta e robustez frente a diferentes condições operacionais. Esse ciclo contínuo de desenvolvimento, validação e refinamento visa assegurar que a solução proposta atenda aos requisitos de confiabilidade, escalabilidade e desempenho, mantendo-se adaptável às restrições técnicas, operacionais e temporais do projeto.
+
 
 
 \section{Plano de Trabalho}
-O plano de trabalho se baseia em, inicialmente, em encontros semanais para discussão e andamento do projeto. A princípio, a ferramenta escolhida para o
-trabalho além da linguagem de programaçao Python foi o aplicativo Visual Studio Code, desenvolvido pela Microsoft. Nossa área de trabalho utilizará
-de um ambiente virtual fornecido através da ferramenta Anaconda, e junto de bibliotecas para reconhecimento de objetos - como TinyYOLO -
-o ambiente e as metas - definidos como "missões" pela Comissão da Competição" serão cumpridos.
 
-Seguindo o cronograma proposto pelo professor orientador do projeto, Gabriel M. Alves, obrigatoriamente, entregas
-parciais deste documento devem ocorrer como mostra a tabela 1.1.
 
-\begin{table}[h]
-	\centering
-	\begin{tabular}{@{}cll@{}}
-		\toprule
-		\multicolumn{1}{l}{Data} & Entrega               & Descrição                                                                                                   \\ \midrule
-		07/05                    & Proposta do Seminário & \begin{tabular}[c]{@{}l@{}}Escopo, objetivos, bibliografia inicial \\ e plano de trabalho\end{tabular}      \\
-		21/05                    & Documento Parcial     & \begin{tabular}[c]{@{}l@{}}Introdução e Fundamentação teórica completas,\\ Metodologia parcial\end{tabular} \\
-		11/06 & Protótipo  prático & \begin{tabular}[c]{@{}l@{}}Metodologia completa, \\ Demonstração inicial da implementação  prática\end{tabular} \\
-		24/06                    & Apresentação prévia   & Envio dos slides e do relatório final                                                                       \\
-		-                        & Entrega final         & Envio da aplicação prática e apresentação                                                                   \\ \bottomrule
-	\end{tabular}
-	\caption{Cronograma de entregas}
-	\label{tab:cronograma_entregas}
-\end{table}
+\subsection{Cronograma de Atividades}
+\subsection{Recursos Necessários}
+\subsection{Riscos e Mitigações}
+\subsection{Resultados Esperados}
+\subsection{Contribuições Esperadas}
+\subsection{Publicações e Disseminação dos Resultados}
+\subsection{Colaboração e Parcerias}
+\subsection{Orçamento e Financiamento}
+\subsection{Sustentabilidade do Projeto}
+\subsection{Ética e Considerações Sociais}
+\subsection{Aspectos Éticos e Sociais}
+
 
 \section{Bibliografia}
- SAE BRASIL. Regulamento EletroQuad SAE BRASIL - Eletrobras 2025. Versão 4.0, 2025.
-
-SAE BRASIL. Procedimentos Operacionais – EletroQuad SAE BRASIL - Eletrobras 2025.
-
-SAE BRASIL. Termo de Responsabilidade EletroQuad SAE BRASIL - Eletrobras 2025.
-
-AZEVEDO, Eduardo; CONCI, Aura; LETA, Fabiana. Computação gráfica: teoria e prática:
-geração de imagens. Volume 2. 1. ed. Rio de Janeiro: Alta Books, 2022.
-
-WANG, Ao; CHEN, Hui; LIU, Lihao; CHEN, Kai; LIN, Zijia; HAN, Jungong; DING, Guiguang. YOLOv10: Real-Time End-to-End Object Detection. arXiv preprint,
-2024.
-
-MOKSYAKOV, Alexander; WU, Yuandi; GADSDEN, Stephen Andrew; YAWNEY, John; ALSHABI, Mohammad. Object Detection and Tracking with YOLO and the Sliding
-Innovation Filter. Sensors, v. 24, n. 7, p. 2107, 2024.
-
-HALFACREE, Gareth; UPTON, Eben. Raspberry Pi User Guide. 4. ed. Chichester: Wiley, 2016.
-
-RASPBERRY PI FOUNDATION. Raspberry Pi 3 Model B.
+\subsection{Referências Bibliográficas}
 
 \end{document}
 
