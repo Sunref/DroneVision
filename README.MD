@@ -1,6 +1,4 @@
-# ATLAS
-
-> *Atlas, the titan who held up the heavens, represents unwavering strength and supreme spatial awareness. Our ATLAS carries the weight of precise navigation and environmental mapping with legendary endurance and reliability.*
+# Icarus
 
 
 ---
