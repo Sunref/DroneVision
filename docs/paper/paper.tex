@@ -9,6 +9,7 @@
 \usepackage{booktabs}
 \usepackage[brazilian,brazil,portuguese,english]{babel}
 \usepackage{graphicx}
+\usepackage{hyperref} % Added for better links and references
 
 \author{Fernanda Martins da Silva, Gabriel Maia Miguel}
 \title{Sistemas Cognitivos para Percepção e Navegação Autônoma}
@@ -17,68 +18,137 @@
 \maketitle
 
 \begin{abstract}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+This paper details the development of a cognitive system for autonomous perception and navigation, designed for an unmanned aerial vehicle (UAV) participating in the "ELETROQUAD SAE BRASIL - ELETROBRAS 2025" competition. The project focuses on creating a robust solution for real-time detection of colored geometric shapes and obstacle avoidance, core challenges of the competition. The methodology integrates computer vision models, including the Tiny YOLO architecture for object detection, running on an embedded Raspberry Pi system. The development pipeline, from image processing using the HSV color space to sensor fusion for navigation control, is described. This work represents a practical application of computer vision and artificial intelligence concepts in a competitive academic engineering environment, aiming for a flexible and efficient system adaptable to the dynamic conditions of the competition.
 \end{abstract}
 
 \begin{resumo}
 \begin{otherlanguage}{brazilian}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Este artigo detalha o desenvolvimento de um sistema cognitivo para percepção e navegação autônoma, projetado para um veículo aéreo não tripulado (VANT) no contexto da competição "ELETROQUAD SAE BRASIL - ELETROBRAS 2025". O projeto foca na criação de uma solução robusta para a detecção em tempo real de formas geométricas coloridas e desvio de obstáculos, desafios centrais da competição. A metodologia integra modelos de visão computacional, com destaque para a arquitetura Tiny YOLO para detecção de objetos, executada em um sistema embarcado Raspberry Pi. Descreve-se o pipeline de desenvolvimento, desde o processamento de imagens, utilizando o espaço de cores HSV, até a fusão sensorial para o controle da navegação. Este trabalho representa uma aplicação prática de conceitos de visão computacional e inteligência artificial em um ambiente competitivo de engenharia acadêmica, visando um sistema flexível e eficiente, adaptável às condições dinâmicas do certame.
 \end{otherlanguage}
 \end{resumo}
 \pagebreak
 
 \section{Introdução}
+A navegação autônoma de veículos aéreos não tripulados (VANTs), ou drones, é um campo de pesquisa e desenvolvimento em crescente expansão, impulsionado por suas vastas aplicações, que vão desde a logística e monitoramento até competições acadêmicas que fomentam a inovação. Este trabalho se insere no contexto da \textbf{COMPETIÇÃO ELETROQUAD SAE BRASIL - ELETROBRAS 2025}, um desafio que propõe a estudantes de engenharia e tecnologia o desenvolvimento de soluções práticas para problemas complexos de automação.
 
+Neste cenário, estudantes dos cursos de Bacharel em Ciência da Computação e Engenharia de Controle e Automação do Instituto Federal de Educação, Ciência e Tecnologia (IFSP), Campus São João da Boa Vista, estão desenvolvendo um sistema de percepção e navegação para um drone. O principal desafio é capacitar o VANT a executar missões de forma autônoma, o que inclui a identificação precisa de formas geométricas coloridas, a detecção de obstáculos e a navegação segura em um percurso pré-definido.
+
+A solução proposta é um sistema computacional implementado na linguagem de programação Python, utilizando ferramentas como o ambiente de desenvolvimento Visual Studio Code e bibliotecas especializadas em visão computacional, como o Tiny YOLO. Este documento descreve detalhadamente a arquitetura do sistema, a fundamentação teórica que suporta as escolhas tecnológicas, a metodologia de desenvolvimento e os desafios enfrentados, oferecendo uma visão abrangente do projeto.
+
+\section{A Competição EletroQuad SAE BRASIL}
+A EletroQuad SAE BRASIL é uma competição estudantil que desafia equipes universitárias a projetar, construir e testar um veículo aéreo não tripulado para cumprir uma série de missões. O regulamento da competição (SAE BRASIL, 2025) estabelece requisitos técnicos rigorosos para o drone, bem como os objetivos das tarefas, que simulam aplicações reais de mercado. Entre as missões, destacam-se a identificação de alvos específicos (formas geométricas coloridas) no solo e a navegação por percursos com obstáculos, testando a autonomia, precisão e robustez do sistema embarcado. O projeto visa, portanto, atender a essas exigências, desenvolvendo uma solução tecnológica que seja ao mesmo tempo competitiva e inovadora.
 
 \section{Objetivos}
+O problema central abordado por este projeto é a necessidade de um sistema de percepção e navegação totalmente autônomo, capaz de cumprir as missões estipuladas pela competição EletroQuad SAE BRASIL. A solução para este problema é o desenvolvimento de um sistema embarcado inteligente.
 
+O objetivo geral é projetar e implementar um sistema em Python que, integrado a um VANT, realize as seguintes tarefas de forma autônoma:
+\begin{itemize}
+    \item Identificar formas geométricas (círculos, quadrados, triângulos) e suas respectivas cores.
+    \item Detectar e desviar de obstáculos durante o percurso.
+    \item Mapear e percorrer caminhos definidos, analisando o terreno a partir de dados visuais.
+\end{itemize}
+O sistema proposto é, portanto, a solução técnica que permitirá ao drone interpretar o ambiente e tomar decisões em tempo real para completar com sucesso os desafios da competição.
 
 \section{Fundamentação Teórica}
-\subsection{Visão Computacional}
+
+\subsection{Visão Computacional e Processamento de Imagens}
+A visão computacional é a área da ciência da computação que permite que máquinas "enxerguem" e interpretem o mundo visual. Para um drone autônomo, ela é a base para identificar alvos e navegar com segurança. Este processo começa com o \textbf{processamento de imagens}, a etapa fundamental onde as imagens capturadas pela câmera do drone são preparadas para análise.
+
+Uma imagem digital é uma matriz de pixels. Em imagens coloridas, cada pixel é comumente representado no espaço de cores RGB (Red, Green, Blue). No entanto, o modelo RGB é sensível a variações de iluminação. Para tarefas que dependem da identificação de cores, como as da competição, o espaço de cores \textbf{HSV (Hue, Saturation, Value)} oferece vantagens significativas (AZEVEDO et al., 2022). O HSV separa a informação de cor (Matiz ou \textit{Hue}) da intensidade luminosa (Valor ou \textit{Value}), tornando o sistema mais robusto a mudanças de luz no ambiente.
+
+O pipeline de processamento de imagens neste projeto envolve a conversão do espaço de cores de RGB para HSV, a aplicação de filtros para segmentar as cores de interesse e técnicas de contorno para identificar as formas geométricas.
+
 
 
 \subsection{Sistema Embarcado: Raspberry Pi}
-
-
-\subsection{Processamento de Imagens}
-
+A escolha da plataforma computacional é crítica em projetos de drones, onde peso, consumo de energia e poder de processamento devem ser cuidadosamente balanceados. A \textbf{Raspberry Pi}, um computador de placa única (SBC) de baixo custo e alta flexibilidade, foi selecionada para este projeto. Sua arquitetura baseada em ARM oferece capacidade de processamento suficiente para executar algoritmos de visão computacional em tempo real, ao mesmo tempo que mantém um consumo energético baixo, ideal para sistemas alimentados por bateria (HALFACREE \& UPTON, 2016). A comunidade ativa e a vasta documentação facilitam a prototipagem e a implementação de sistemas embarcados complexos.
 
 \subsection{Redes Neurais para Detecção de Objetos}
+Para a tarefa de detecção de objetos, as Redes Neurais Convolucionais (CNNs) são o estado da arte. Diferente de métodos clássicos, as CNNs aprendem a extrair características relevantes diretamente das imagens, oferecendo maior precisão e generalização.
 
+\subsubsection{Arquitetura YOLO e Tiny YOLO}
+\textbf{YOLO (You Only Look Once)} é uma família de arquiteturas de CNNs revolucionária para detecção de objetos em tempo real. Seu diferencial é tratar a detecção como um único problema de regressão, analisando a imagem uma única vez para prever caixas delimitadoras (\textit{bounding boxes}) e probabilidades de classe, o que a torna extremamente rápida (WANG et al., 2024).
 
-\subsubsection{Arquitetura TinyYOLO}
+Para aplicações em sistemas com recursos computacionais limitados, como a Raspberry Pi, a versão completa do YOLO pode ser muito exigente. Por isso, optou-se pela \textbf{Tiny YOLO}, uma versão compacta e otimizada da arquitetura.
+
+\paragraph{Comparativo: YOLO vs. Tiny YOLO}
+\begin{itemize}
+    \item \textbf{YOLO:} Possui uma arquitetura mais profunda, com mais camadas convolucionais. Isso resulta em maior precisão na detecção, sendo capaz de identificar objetos menores ou mais complexos com maior acurácia. O custo é um maior peso computacional e menor velocidade de inferência.
+    \item \textbf{Tiny YOLO:} Possui uma estrutura significativamente menor e mais simples, com menos camadas e filtros. Isso a torna muito mais rápida e leve, ideal para inferência em tempo real em dispositivos embarcados. A contrapartida é uma ligeira redução na precisão em comparação com a versão completa (MOKSYAKOV et al., 2024).
+\end{itemize}
+
+Para o contexto da competição, onde a velocidade de detecção é crucial para a navegação autônoma e os alvos são formas geométricas bem definidas, o equilíbrio entre velocidade e precisão oferecido pela Tiny YOLO é o mais vantajoso.
 
 
 \section{Metodologia}
 
 \subsection{Estrutura dos Modelos Computacionais}
+A metodologia adotada se baseia na integração de três modelos computacionais:
+\begin{enumerate}
+    \item \textbf{Detecção de Objetos e Formas:} Utilizando Tiny YOLO e técnicas de processamento de imagem.
+    \item \textbf{Estimativa de Profundidade:} Para medir a distância até os objetos e obstáculos.
+    \item \textbf{Mapeamento e Controle:} Para construir um mapa do ambiente e gerar comandos de navegação.
+\end{enumerate}
 
-
-\subsection{Pipeline de Integração e Estado de Desenvolvimento}
+\subsection{Pipeline de Integração e Desenvolvimento}
+Os modelos são integrados em um pipeline que funde os dados dos sensores visuais e inerciais. Este pipeline é responsável por gerar os comandos de controle para o drone, permitindo que ele reaja dinamicamente ao ambiente. O projeto está em fase de prototipagem, sujeito a melhorias contínuas.
 
 
 \subsection{Estratégia de Validação e Refinamento}
-
-
+A validação do sistema ocorre em duas frentes: simulações em ambiente digital e testes práticos com o drone. Métricas como precisão de detecção, tempo de resposta e robustez são avaliadas para refinar continuamente o sistema e garantir que ele atenda aos requisitos da competição.
 
 \section{Plano de Trabalho}
+O desenvolvimento segue um cronograma de encontros semanais e entregas parciais, conforme a tabela \ref{tab:cronograma_entregas}, sob a orientação do professor Gabriel M. Alves.
 
-
-\subsection{Cronograma de Atividades}
-\subsection{Recursos Necessários}
-\subsection{Riscos e Mitigações}
-\subsection{Resultados Esperados}
-\subsection{Contribuições Esperadas}
-\subsection{Publicações e Disseminação dos Resultados}
-\subsection{Colaboração e Parcerias}
-\subsection{Orçamento e Financiamento}
-\subsection{Sustentabilidade do Projeto}
-\subsection{Ética e Considerações Sociais}
-\subsection{Aspectos Éticos e Sociais}
-
+\begin{table}[h!]
+	\centering
+	\caption{Cronograma de entregas}
+	\label{tab:cronograma_entregas}
+	\begin{tabular}{@{}llp{8cm}@{}}
+		\toprule
+		\textbf{Data} & \textbf{Entrega} & \textbf{Descrição} \\
+        \midrule
+		07/05 & Proposta do Seminário & Escopo, objetivos, bibliografia inicial e plano de trabalho \\
+		21/05 & Documento Parcial & Introdução e Fundamentação teórica completas, Metodologia parcial \\
+		11/06 & Protótipo prático & Metodologia completa, Demonstração inicial da implementação prática \\
+		24/06 & Apresentação prévia e Entrega final & Envio dos slides, do relatório final e da aplicação prática \\
+        \bottomrule
+	\end{tabular}
+\end{table}
 
 \section{Bibliografia}
-\subsection{Referências Bibliográficas}
+% Para um documento formal, considere usar BibTeX e o comando \cite{}.
+% Por enquanto, a lista está formatada como texto simples.
+\noindent
+AZEVEDO, Eduardo; CONCI, Aura; LETA, Fabiana. \textit{Computação gráfica: teoria e prática: geração de imagens}. Volume 2. 1. ed. Rio de Janeiro: Alta Books, 2022.
+\vspace{0.2cm}
+
+\noindent
+HALFACREE, Gareth; UPTON, Eben. \textit{Raspberry Pi User Guide}. 4. ed. Chichester: Wiley, 2016.
+\vspace{0.2cm}
+
+\noindent
+MOKSYAKOV, Alexander; WU, Yuandi; GADSDEN, Stephen Andrew; YAWNEY, John; ALSHABI, Mohammad. Object Detection and Tracking with YOLO and the Sliding Innovation Filter. \textit{Sensors}, v. 24, n. 7, p. 2107, 2024.
+\vspace{0.2cm}
+
+\noindent
+RASPBERRY PI FOUNDATION. Raspberry Pi 3 Model B.
+\vspace{0.2cm}
+
+\noindent
+SAE BRASIL. \textit{Regulamento EletroQuad SAE BRASIL - Eletrobras 2025}. Versão 4.0, 2025.
+\vspace{0.2cm}
+
+\noindent
+SAE BRASIL. \textit{Procedimentos Operacionais - EletroQuad SAE BRASIL - Eletrobras 2025}. 2025.
+\vspace{0.2cm}
+
+\noindent
+SAE BRASIL. \textit{Termo de Responsabilidade EletroQuad SAE BRASIL - Eletrobras 2025}.
+\vspace{0.2cm}
+
+\noindent
+WANG, Ao; CHEN, Hui; LIU, Lihao; CHEN, Kai; LIN, Zijia; HAN, Jungong; DING, Guiguang. \textit{YOLOv10: Real-Time End-to-End Object Detection}. arXiv preprint, 2024.
 
 \end{document}
 

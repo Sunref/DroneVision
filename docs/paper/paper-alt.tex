@@ -1,0 +1,206 @@
+%
+% TeX by Fernanda M. Silva and Gabriel M. Miguel
+% This is a project assignment by Gabriel M. Alves
+%
+
+\documentclass{SBCbookchapter}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage[brazilian,brazil,portuguese,english]{babel}
+\usepackage{graphicx}
+
+\author{Fernanda Martins da Silva, Gabriel Maia Miguel}
+\title{Sistemas Cognitivos para Percepção e Navegação Autônoma}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+\end{abstract}
+
+\begin{resumo}
+\begin{otherlanguage}{brazilian}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+\end{otherlanguage}
+\end{resumo}
+\pagebreak
+
+\section{Introdução}
+
+
+\section{Objetivos}
+
+
+\section{Fundamentação Teórica}
+\subsection{Visão Computacional}
+
+
+\subsection{Sistema Embarcado: Raspberry Pi}
+
+
+\subsection{Processamento de Imagens}
+
+
+\subsection{Redes Neurais para Detecção de Objetos}
+
+
+\subsubsection{Arquitetura TinyYOLO}
+
+
+\section{Metodologia}
+
+\subsection{Estrutura dos Modelos Computacionais}
+
+
+\subsection{Pipeline de Integração e Estado de Desenvolvimento}
+
+
+\subsection{Estratégia de Validação e Refinamento}
+
+
+
+\section{Plano de Trabalho}
+
+
+\subsection{Cronograma de Atividades}
+\subsection{Recursos Necessários}
+\subsection{Riscos e Mitigações}
+\subsection{Resultados Esperados}
+\subsection{Contribuições Esperadas}
+\subsection{Publicações e Disseminação dos Resultados}
+\subsection{Colaboração e Parcerias}
+\subsection{Orçamento e Financiamento}
+\subsection{Sustentabilidade do Projeto}
+\subsection{Ética e Considerações Sociais}
+\subsection{Aspectos Éticos e Sociais}
+
+
+\section{Bibliografia}
+\subsection{Referências Bibliográficas}
+
+\end{document}
+
+%% ================================================================
+
+% Documento TeX original:
+\section{Figures and Captions}
+\label{sec:captionmargins}
+Figures and tables captions should be centered if less than one line
+(Figure~\ref{figone}), otherwise justified and indented by 0.8cm on
+both margins, as shown in Figure~\ref{figtwo}. The font must be
+Helvetica, 10~point, boldface, with 6~points of space before and after
+each caption.
+
+\begin{figure}[h!]
+	\centerline{\includegraphics{fig1}}
+	\caption{A typical figure}
+	\label{figone}
+\end{figure}
+
+In tables, do not use colored or shaded backgrounds, and avoid thick,
+doubled, or unnecessary framing lines. When reporting empirical data,
+do not use more decimal digits than warranted by their precision and
+reproducibility. Table caption must be placed before the table (see
+Table~\ref{tabone}) and the font used must also be Helvetica,
+10~point, boldface, with 6~points of space before and after each
+caption.
+
+Figure and table references must be composed by the chapter number and
+a sequence number beginning in one (see the examples of
+Figure~\ref{figone}, Figure~\ref{figtwo} and Table~\ref{tabone}).
+
+\begin{figure}[h!]
+	\centerline{\includegraphics{fig2}}
+	\caption{This figure is an example of a figure caption taking
+		more than one line and justified considering margins
+		mentioned in Section~\ref{sec:captionmargins}}
+	\label{figtwo}
+\end{figure}
+
+\section{Images}
+All images and illustrations should be in black-and-white, or gray
+tones. The image resolution on paper should be about 600~dpi for
+black-and-white images, and 150-200~dpi for grayscale images.  Do not
+include images with excessive resolution, as they may take hours to
+print, without any visible difference in the result.
+
+\begin{table}[h!]
+	\caption{Variables to be considered on the evaluation of
+		interaction techniques.}
+	\label{tabone}
+	\begin{footnotesize}
+	\begin{tabular}{|p{40mm}|p{55mm}|p{42mm}|}
+	\hline
+	\hspace*{\fill}\textbf{Tarefa}\hspace*{\fill} &
+	\hspace*{\fill}\textbf{Variável}\hspace*{\fill} &
+	\hspace*{\fill}\textbf{Métrica utilizada}\hspace*{\fill}\\
+	\hline
+	Seleção &
+	Distância do alvo &
+	Virtual cubits \\ \cline{2-3}
+	& Direção horizontal e vertical do alvo &
+	Graus do arco \\ \cline{2-3}
+	& Distância do objeto oculto &
+	Virtual cubits \\ \cline{2-3}
+	& Direção da oclusão &
+	Esquerda/direita/cima/baixo \\
+	\hline
+	Posicionamento &
+	Distância inicial &
+	Virtual cubits \\ \cline{2-3}
+	& Direções iniciais horizontal e vertical &
+	Graus do arco \\ \cline{2-3}
+	& Distância final &
+	Virtual cubits \\ \cline{2-3}
+	& Direções finais horizontal e vertical &
+	Graus do arco \\ \cline{2-3}
+	& Precisão vertical &
+	Porcentagem de sobreposição \\ \cline{2-3}
+	& Precisão horizontal &
+	Porcentagem de sobreposição \\
+	\hline
+	Orientação &
+	Distância &
+	Virtual cubits \\ \cline{2-3}
+	& Direções horizontal e vertical &
+	Graus do arco \\ \cline{2-3}
+	& Orientação inicial (3 angulos) &
+	Graus do arco \\ \cline{2-3}
+	& Orientação final (3 angulos) &
+	Graus do arco \\ \cline{2-3}
+	& Exatidão/precisão &
+	Graus do arco \\
+	\hline
+	\end{tabular}
+	\end{footnotesize}
+\end{table}
+
+\section{References}
+Bibliographic references must be unambiguous and uniform.  We
+recommend giving the author names references in brackets,
+e.g.~[Knuth~1984], [Kernighan and Ritchie~1990]; or dates in
+parentheses, e.g.~Knuth (1984), Sederberg and Zundel (1989,1990).
+
+% you should really use BibTeX instead of this... :-)
+\begin{thebibliography}{99}
+\bibitem{bou91} Boulic, R. and Renault, O. (1991) ``3D Hierarchies for
+  Animation'', In: New Trends in Animation and Visualization, Edited
+  by Nadia Magnenat-Thalmann and Daniel Thalmann, John Wiley \& Sons
+  ltd., England.
+
+\bibitem{dye95} Dyer, S., Martin, J. and Zulauf, J. (1995) ``Motion
+  Capture White Paper'',
+  http://reality.sgi.com/employees/jam\_sb/mocap/MoCapWP\_v2.0.html,
+  December.
+
+\bibitem{hol95} Holton, M. and Alexander, S. (1995) ``Soft Cellular
+  Modeling: A Technique for the Simulation of Non-rigid Materials'',
+  Computer Graphics: Developments in Virtual Environments, R. A.
+  Earnshaw and J. A. Vince, England, Academic Press Ltd., p.~449-460.
+
+\bibitem{knu84} Knuth, D. E., The TeXbook, Addison Wesley, 1984.
+\end{thebibliography}
+
+\end{document}
