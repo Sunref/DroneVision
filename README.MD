@@ -85,3 +85,4 @@ Copyright (C) 2025 Sunref
 
 - MiDaS team for their excellent work on depth estimation
 - Contributors and maintainers of related computer vision libraries
+- Some images used in this project were obtained from the repository [DLR-RM/BlenderProc](https://github.com/DLR-RM/BlenderProc)
