@@ -1,25 +1,87 @@
-# DroneVision
-A simple computer vision system for drones that identifies objects and follows paths.
+# MiDepth - Depth Estimation System
 
-### About
-This is a project made by <a href="https://github.com/Sunref">Sunref</a> and <a href="https://github.com/gm64x">gm64x</a> for the Computer Vision class.
+## Overview
+This project is a depth estimation system that processes images and videos using MiDaS (Mixed Dense Architecture for Single-Image Depth Estimation). The system analyzes input media and generates depth maps, providing a comprehensive understanding of spatial relationships in the visual content.
 
-## Description
+## Features
+- Real-time depth estimation for videos
+- Integration with MiDaS for accurate depth perception
+- Support for various input formats
+- Visual representation of depth information
 
-This project implements computer vision algorithms on a drone to:
-* Detect and classify objects in real-time
-* Identify paths in the environment
-* Navigate autonomously by following these paths
+## Technologies
+- Python
+- MiDaS (Mixed Dense Architecture for Single-Image Depth Estimation)
+- Computer Vision libraries
 
-The system processes video feed from the drone's camera to recognize objects such as vehicles, buildings, people, and obstacles. Using edge detection and path recognition algorithms, it can identify walkways, roads, or designated routes and guide the drone to follow them while avoiding detected obstacles.
+## Installation
 
-# Structure
+### 1. Set up Python virtual environment
+
+#### Linux (Debian) / macOS:
+```bash
+python3 -m venv venv
+source venv/bin/activate
 ```
-├── data          # Armazena os dados do projeto, como conjuntos de dados, dados brutos e processados
-├── docs          # Documentação do projeto, incluindo especificações técnicas e manuais de usuário
-├── notebooks     # Notebooks Jupyter/Python para análises exploratórias e demonstrações
-├── reports       # Relatórios gerados, resultados e saídas do projeto
-│   └── images    # Imagens usadas nos relatórios ou geradas pelo projeto
-├── src           # Código-fonte do projeto, contendo os módulos e classes principais
-└── tests         # Testes unitários e de integração para verificar a funcionalidade do código
+
+#### Windows (PowerShell):
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
 ```
+
+#### Windows (cmd):
+```cmd
+python -m venv venv
+.\venv\Scripts\activate.bat
+```
+
+> **Note:** Make sure `python3-tk` is installed on your system:
+> 
+> ```bash - for Debian
+> sudo apt update
+> sudo apt upgrade
+> sudo apt install python3-tk
+> ```
+
+---
+
+### 2. Upgrade pip and install dependencies
+
+```bash
+pip install --upgrade pip
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+pip install opencv-python
+pip install pillow
+pip install ttkbootstrap
+pip install matplotlib
+pip install timm
+```
+
+---
+
+After this, run the main scripts as described below.
+
+## Usage
+
+- Run the desired Python script for image or video depth processing.
+- Example:
+  ```bash
+  python main.py 
+  ```
+  
+## Examples
+
+[Coming soon: Example outputs and visualizations]
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 (GPLv3).  
+See the [LICENSE](LICENSE) file for details.
+
+Copyright (C) 2025 Sunref
+
+## Acknowledgments
+
+- MiDaS team for their excellent work on depth estimation
+- Contributors and maintainers of related computer vision libraries
