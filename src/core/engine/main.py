@@ -17,7 +17,8 @@ from scipy.ndimage import gaussian_filter
 import logging
 import sys
 import traceback
-
+import os
+from datetime import datetime
 
 # Configuração do logging
 logging.basicConfig(
@@ -48,8 +49,6 @@ class TopoDepthApp:
         self.selection_end = None
         self.measuring = False
 
-
-
         # Variáveis para histograma
         self.histogram_frame = None
         self.histogram_canvas = None
@@ -63,8 +62,6 @@ class TopoDepthApp:
         self.model_strong = torch.hub.load("intel-isl/MiDaS", "DPT_Hybrid")
         self.model_strong.to(self.device).eval()
         self.transform_strong = torch.hub.load("intel-isl/MiDaS", "transforms").dpt_transform
-
-
 
         self.model_fast = torch.hub.load("intel-isl/MiDaS", "MiDaS_small")
         self.model_fast.to(self.device).eval()
@@ -97,8 +94,6 @@ class TopoDepthApp:
         save_btn.pack(side='left', padx=5)
         ToolTip(save_btn, "Salvar a imagem processada")
 
-
-
         # Botões originais
         ttk.Button(btn_row1, text="Iniciar Câmera", command=self.start_camera, bootstyle="success-outline").pack(side='left', padx=5)
         ttk.Button(btn_row1, text="Parar Câmera", command=self.stop_camera, bootstyle="danger-outline").pack(side='left', padx=5)
@@ -112,6 +107,10 @@ class TopoDepthApp:
         measure_btn = ttk.Button(btn_row2, text="Medir Distância", command=self.toggle_measurement, bootstyle="info-outline")
         measure_btn.pack(side='left', padx=5)
         ToolTip(measure_btn, "Medir distância relativa entre pontos")
+
+        capture_btn = ttk.Button(btn_row2, text="Capturar Câmera", command=self.capture_camera, bootstyle="warning-outline")
+        capture_btn.pack(side='left', padx=5)
+        ToolTip(capture_btn, "Capturar e salvar imagem atual da câmera")
 
         clear_line_btn = ttk.Button(btn_row2, text="Limpar Linha", command=self.clear_measurement_line, bootstyle="warning-outline")
         clear_line_btn.pack(side='left', padx=5)
@@ -254,10 +253,6 @@ class TopoDepthApp:
             messagebox.showinfo("Medição",
                 "Clique em dois pontos na imagem processada para medir a distância relativa")
 
-
-
-
-
     def on_click(self, event):
         """Manipula eventos de clique do mouse"""
         if self.depth_map_raw is None:
@@ -283,8 +278,6 @@ class TopoDepthApp:
             if len(self.measuring_points) == 2:
                 self.calculate_distance()
                 self.measuring_points = []
-
-
 
     def calculate_distance(self):
         """Calcula e visualiza a distância relativa entre dois pontos"""
@@ -385,9 +378,6 @@ class TopoDepthApp:
             # Força fechamento da janela
             self.root.quit()
             self.root.destroy()
-
-
-
 
     def load_image(self):
         try:
@@ -647,28 +637,84 @@ class TopoDepthApp:
         ax.set_title("Mapa 3D de Profundidade")
 
         plt.tight_layout()
+
+        # Salvar automaticamente o gráfico 3D
+        output_dir = os.path.join("src", "assets", "output")
+        os.makedirs(output_dir, exist_ok=True)
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"3d_visualization_{timestamp}.png"
+        filepath = os.path.join(output_dir, filename)
+
+        plt.savefig(filepath, dpi=300, bbox_inches='tight')
+        messagebox.showinfo("Sucesso", f"Visualização 3D salva automaticamente em:\n{filepath}")
+
         fig.canvas.draw_idle()  # Força uma renderização inicial
         plt.show()
 
     def visualizar_contornos(self):
         if self.depth_map_raw is None:
             return
-        plt.figure()
+        plt.close('all')  # Fecha plots anteriores
+        plt.figure(figsize=(10, 8))
         plt.contourf(self.depth_map_raw, levels=30, cmap='viridis')
         plt.colorbar(label='Profundidade')
         plt.title("Curvas de Nível da Profundidade")
         plt.tight_layout()
+
+        # Salvar automaticamente o gráfico de contornos
+        output_dir = os.path.join("src", "assets", "output")
+        os.makedirs(output_dir, exist_ok=True)
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"contour_visualization_{timestamp}.png"
+        filepath = os.path.join(output_dir, filename)
+
+        plt.savefig(filepath, dpi=300, bbox_inches='tight')
+        messagebox.showinfo("Sucesso", f"Visualização de contornos salva automaticamente em:\n{filepath}")
+
         plt.show()
+
+    def _save_image_to_output(self, image, prefix="image"):
+        """Método auxiliar para salvar imagens padronizadamente na pasta output"""
+        if image is None:
+            return False
+
+        # Criar o diretório de saída se não existir
+        output_dir = os.path.join("src", "assets", "output")
+        os.makedirs(output_dir, exist_ok=True)
+
+        # Gerar nome único baseado na data/hora
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"{prefix}_{timestamp}.png"
+        path = os.path.join(output_dir, filename)
+
+        # Salvar a imagem
+        success = cv2.imwrite(path, image)
+        if success:
+            messagebox.showinfo("Sucesso", f"Imagem salva automaticamente em:\n{path}")
+            return True
+        else:
+            messagebox.showerror("Erro", "Falha ao salvar a imagem")
+            return False
 
     def save_result(self):
         if self.processed_image is None:
             return
-        path = filedialog.asksaveasfilename(
-            defaultextension=".png",
-            filetypes=[("PNG", "*.png"), ("JPEG", "*.jpg")]
-        )
-        if path:
-            cv2.imwrite(path, self.processed_image)
+        self._save_image_to_output(self.processed_image, "depth_result")
+
+    def capture_camera(self):
+        """Captura a imagem atual da câmera e salva na pasta output"""
+        if not self.running or not hasattr(self, 'cap') or not self.cap:
+            messagebox.showwarning("Aviso", "Câmera não está ativa")
+            return
+
+        # Capturar frame atual
+        ret, frame = self.cap.read()
+        if ret:
+            self._save_image_to_output(frame, "camera_capture")
+        else:
+            messagebox.showerror("Erro", "Falha ao capturar imagem da câmera")
 
     def start_camera(self):
         if self.running:

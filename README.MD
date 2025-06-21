@@ -16,63 +16,26 @@ This project is a depth estimation system that processes images and videos using
 
 ## Installation
 
-### 1. Set up Python virtual environment
-
-#### Linux (Debian) / macOS:
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-#### Windows (PowerShell):
-```powershell
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-```
-
-#### Windows (cmd):
-```cmd
-python -m venv venv
-.\venv\Scripts\activate.bat
-```
-
-> **Note:** Make sure `python3-tk` is installed on your system:
-> 
-> ```bash - for Debian
-> sudo apt update
-> sudo apt upgrade
-> sudo apt install python3-tk
-> ```
-
----
-
-### 2. Upgrade pip and install dependencies
-
-```bash
-pip install --upgrade pip
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-pip install opencv-python
-pip install pillow
-pip install ttkbootstrap
-pip install matplotlib
-pip install timm
-```
-
----
-
-After this, run the main scripts as described below.
+See [SETUP.md](SETUP.md) for detailed installation instructions.
 
 ## Usage
 
 - Run the desired Python script for image or video depth processing.
 - Example:
   ```bash
-  python main.py 
+  python src/core/engine/main.py
   ```
   
 ## Examples
 
-[Coming soon: Example outputs and visualizations]
+### Input Image
+![Original Image](src/assets/images/Bear.jpg)
+
+### Depth Result
+![Depth Result](src/assets/output/depth_result_20250621_152055.png)
+
+### Contour Visualization
+![Contour Visualization](src/assets/output/contour_visualization_20250621_152437.png)
 
 ## License
 
