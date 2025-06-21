@@ -14,6 +14,7 @@ venv\Scripts\activate               # Windows
 
 # 3. Install dependencies
 pip install --upgrade pip
+
 pip install -r requirements.txt
 
 ## 🔄 Daily Usage
