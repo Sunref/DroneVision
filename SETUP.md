@@ -4,10 +4,12 @@
 
 # 1. Create virtual environment
 python3 -m venv venv                # Linux/macOS
- python -m venv venv                # Windows
+
+python -m venv venv                 # Windows
 
 # 2. Activate environment
 source venv/bin/activate            # Linux/macOS
+
 venv\Scripts\activate               # Windows
 
 # 3. Install dependencies
@@ -19,6 +21,7 @@ pip install -r requirements.txt
 ### Activate environment:
 ```bash
 source venv/bin/activate            # Linux/macOS
+
 venv\Scripts\activate               # Windows
 ```
 
